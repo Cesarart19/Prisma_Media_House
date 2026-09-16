@@ -1,0 +1,277 @@
+---
+// About section - Who we are
+const values = [
+  {
+    title: "Calidad Profesional",
+    description: "Cada proyecto se ejecuta con los más altos estándares de producción.",
+    icon: "quality"
+  },
+  {
+    title: "Creatividad",
+    description: "Ideas frescas y originales que hacen destacar tu marca.",
+    icon: "creative"
+  },
+  {
+    title: "Puntualidad",
+    description: "Cumplimos con los tiempos acordados. Tu contenido a tiempo.",
+    icon: "time"
+  },
+  {
+    title: "Compromiso",
+    description: "Tu éxito es nuestro éxito. Nos involucramos con cada proyecto.",
+    icon: "commitment"
+  }
+];
+
+const equipment = [
+  { name: "Cámaras 4K", description: "Equipos de última generación para grabación profesional" },
+  { name: "Iluminación", description: "Luces LED y paneles para escenarios perfectos" },
+  { name: "Audio", description: "Micrófonos y mezcladoras de calidad broadcast" },
+  { name: "Edición", description: "Estaciones de trabajo con software profesional" }
+];
+---
+
+<section class="about section" id="nosotros">
+  <div class="container">
+    <div class="about-grid">
+      <!-- Left Column - Text -->
+      <div class="about-content">
+        <span class="section-badge">Sobre Nosotros</span>
+        <h2 class="about-title">Tu socio en producción audiovisual</h2>
+        <p class="about-description">
+          En Prisma Media House creemos que cada marca tiene una historia que contar. 
+          Somos un equipo de profesionales apasionados por la producción audiovisual, 
+          comprometidos en transformar tus ideas en contenido que conecta con tu audiencia.
+        </p>
+        <p class="about-description">
+          Combinamos tecnología de vanguardia con creatividad para ofrecer servicios 
+          de producción que elevan la imagen de tu empresa o marca personal.
+        </p>
+        
+        <div class="about-values">
+          {values.map(value => (
+            <div class="value-item">
+              <div class="value-icon">
+                {value.icon === 'quality' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                )}
+                {value.icon === 'creative' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                    <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                    <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                  </svg>
+                )}
+                {value.icon === 'time' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                )}
+                {value.icon === 'commitment' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                  </svg>
+                )}
+              </div>
+              <div>
+                <h4 class="value-title">{value.title}</h4>
+                <p class="value-description">{value.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <!-- Right Column - Equipment -->
+      <div class="about-equipment">
+        <div class="equipment-header">
+          <h3 class="equipment-title">Nuestros Equipos</h3>
+          <p class="equipment-subtitle">
+            Contamos con tecnología profesional para garantizar resultados excepcionales.
+          </p>
+        </div>
+        
+        <div class="equipment-grid">
+          {equipment.map(item => (
+            <div class="equipment-item">
+              <h4 class="equipment-name">{item.name}</h4>
+              <p class="equipment-description">{item.description}</p>
+            </div>
+          ))}
+        </div>
+        
+        <div class="equipment-image">
+          <img 
+            src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=600&h=400&fit=crop" 
+            alt="Equipo de producción audiovisual"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    background-color: var(--color-bg);
+  }
+  
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-3xl);
+    align-items: start;
+  }
+  
+  .section-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: rgba(27, 42, 74, 0.1);
+    color: var(--color-primary);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  [data-theme="dark"] .section-badge {
+    background-color: rgba(192, 192, 192, 0.1);
+    color: var(--color-secondary);
+  }
+  
+  .about-title {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text);
+  }
+  
+  .about-description {
+    color: var(--color-text-secondary);
+    margin-bottom: var(--spacing-md);
+    font-size: 1.0625rem;
+  }
+  
+  .about-values {
+    margin-top: var(--spacing-xl);
+    display: grid;
+    gap: var(--spacing-md);
+  }
+  
+  .value-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: start;
+  }
+  
+  .value-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+  
+  .value-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+  
+  .value-description {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  
+  /* Equipment Section */
+  .about-equipment {
+    background-color: var(--color-bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+  }
+  
+  [data-theme="dark"] .about-equipment {
+    background-color: var(--color-bg-secondary-dark);
+  }
+  
+  .equipment-header {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .equipment-title {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+  
+  .equipment-subtitle {
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  
+  .equipment-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .equipment-item {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+  }
+  
+  [data-theme="dark"] .equipment-item {
+    background-color: var(--color-bg-dark);
+  }
+  
+  .equipment-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-xs);
+    color: var(--color-text);
+  }
+  
+  .equipment-description {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  
+  .equipment-image {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  
+  .equipment-image img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-2xl);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .equipment-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

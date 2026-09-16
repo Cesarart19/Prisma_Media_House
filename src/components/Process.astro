@@ -1,0 +1,226 @@
+---
+// Process section - How we work
+const steps = [
+  {
+    number: "01",
+    title: "Contactas",
+    description: "Cuéntanos qué necesitas a través de WhatsApp. Entenderemos tu proyecto y objetivos.",
+    icon: "chat"
+  },
+  {
+    number: "02",
+    title: "Cotizamos",
+    description: "Te presentamos una propuesta personalizada con alcance, tiempos y inversión.",
+    icon: "document"
+  },
+  {
+    number: "03",
+    title: "Producimos",
+    description: "Nuestro equipo se encarga de la preproducción, grabación y postproducción.",
+    icon: "camera"
+  },
+  {
+    number: "04",
+    title: "Entregamos",
+    description: "Recibes tu contenido profesional, listo para publicar y impactar a tu audiencia.",
+    icon: "check"
+  }
+];
+---
+
+<section class="process section" id="proceso">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Cómo Trabajamos</span>
+      <h2 class="section-title">De la idea al contenido final</h2>
+      <p class="section-subtitle">
+        Un proceso simple y profesional para que obtengas el contenido 
+        que necesitas sin complicaciones.
+      </p>
+    </div>
+    
+    <div class="process-timeline">
+      <div class="timeline-line"></div>
+      
+      {steps.map((step, index) => (
+        <div class="process-step reveal" style={`animation-delay: ${index * 0.15}s`}>
+          <div class="step-number">{step.number}</div>
+          <div class="step-content">
+            <div class="step-icon">
+              {step.icon === 'chat' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+              )}
+              {step.icon === 'document' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                  <polyline points="14 2 14 8 20 8"></polyline>
+                  <line x1="16" y1="13" x2="8" y2="13"></line>
+                  <line x1="16" y1="17" x2="8" y2="17"></line>
+                  <polyline points="10 9 9 9 8 9"></polyline>
+                </svg>
+              )}
+              {step.icon === 'camera' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+              )}
+              {step.icon === 'check' && (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+              )}
+            </div>
+            <h3 class="step-title">{step.title}</h3>
+            <p class="step-description">{step.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .process {
+    background-color: var(--color-bg-secondary);
+  }
+  
+  [data-theme="dark"] .process {
+    background-color: var(--color-bg-secondary-dark);
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+  
+  .section-badge {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: rgba(27, 42, 74, 0.1);
+    color: var(--color-primary);
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  [data-theme="dark"] .section-badge {
+    background-color: rgba(192, 192, 192, 0.1);
+    color: var(--color-secondary);
+  }
+  
+  .process-timeline {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  .timeline-line {
+    position: absolute;
+    top: 40px;
+    left: 10%;
+    right: 10%;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    z-index: 0;
+  }
+  
+  [data-theme="dark"] .timeline-line {
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+  }
+  
+  .process-step {
+    position: relative;
+    text-align: center;
+    z-index: 1;
+  }
+  
+  .step-number {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: var(--radius-full);
+    margin: 0 auto var(--spacing-lg);
+    position: relative;
+  }
+  
+  .step-content {
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-fast);
+  }
+  
+  [data-theme="dark"] .step-content {
+    background-color: var(--color-bg-dark);
+  }
+  
+  .process-step:hover .step-content {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
+  }
+  
+  [data-theme="dark"] .process-step:hover .step-content {
+    border-color: var(--color-secondary);
+  }
+  
+  .step-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(27, 42, 74, 0.1);
+    color: var(--color-primary);
+    border-radius: var(--radius-md);
+    margin: 0 auto var(--spacing-md);
+  }
+  
+  [data-theme="dark"] .step-icon {
+    background-color: rgba(192, 192, 192, 0.1);
+    color: var(--color-secondary);
+  }
+  
+  .step-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text);
+  }
+  
+  .step-description {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+  
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .process-timeline {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .timeline-line {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .process-timeline {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
