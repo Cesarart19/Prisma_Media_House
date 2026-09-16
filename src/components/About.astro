@@ -24,10 +24,10 @@ const values = [
 ];
 
 const equipment = [
-  { name: "Cámaras 4K", description: "Equipos de última generación para grabación profesional" },
-  { name: "Iluminación", description: "Luces LED y paneles para escenarios perfectos" },
-  { name: "Audio", description: "Micrófonos y mezcladoras de calidad broadcast" },
-  { name: "Edición", description: "Estaciones de trabajo con software profesional" }
+  { name: "Cámaras 4K", description: "Equipos de última generación para grabación profesional", icon: "camera" },
+  { name: "Iluminación", description: "Luces LED y paneles para escenarios perfectos", icon: "light" },
+  { name: "Audio", description: "Micrófonos y mezcladoras de calidad broadcast", icon: "audio" },
+  { name: "Edición", description: "Estaciones de trabajo con software profesional", icon: "edit" }
 ];
 ---
 
@@ -98,8 +98,43 @@ const equipment = [
         <div class="equipment-grid">
           {equipment.map(item => (
             <div class="equipment-item">
-              <h4 class="equipment-name">{item.name}</h4>
-              <p class="equipment-description">{item.description}</p>
+              <div class="equipment-icon">
+                {item.icon === 'camera' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                    <circle cx="12" cy="13" r="4"></circle>
+                  </svg>
+                )}
+                {item.icon === 'light' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                  </svg>
+                )}
+                {item.icon === 'audio' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                )}
+                {item.icon === 'edit' && (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                  </svg>
+                )}
+              </div>
+              <div class="equipment-info">
+                <h4 class="equipment-name">{item.name}</h4>
+                <p class="equipment-description">{item.description}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -110,6 +145,9 @@ const equipment = [
             alt="Equipo de producción audiovisual"
             loading="lazy"
           />
+          <div class="equipment-image-overlay">
+            <span class="equipment-image-text">Estudio Profesional</span>
+          </div>
         </div>
       </div>
     </div>
@@ -154,6 +192,7 @@ const equipment = [
     color: var(--color-text-secondary);
     margin-bottom: var(--spacing-md);
     font-size: 1.0625rem;
+    line-height: 1.7;
   }
   
   .about-values {
@@ -166,11 +205,18 @@ const equipment = [
     display: flex;
     gap: var(--spacing-md);
     align-items: start;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    transition: all 0.3s ease;
+  }
+  
+  .value-item:hover {
+    background-color: var(--color-bg-secondary);
   }
   
   .value-icon {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -178,6 +224,11 @@ const equipment = [
     color: white;
     border-radius: var(--radius-md);
     flex-shrink: 0;
+    transition: all 0.3s ease;
+  }
+  
+  .value-item:hover .value-icon {
+    transform: scale(1.1) rotate(-5deg);
   }
   
   .value-title {
@@ -191,6 +242,7 @@ const equipment = [
     font-size: 0.9375rem;
     color: var(--color-text-secondary);
     margin: 0;
+    line-height: 1.5;
   }
   
   /* Equipment Section */
@@ -227,14 +279,40 @@ const equipment = [
   }
   
   .equipment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-md);
     background-color: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--spacing-md);
+    transition: all 0.3s ease;
+  }
+  
+  .equipment-item:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
   }
   
   [data-theme="dark"] .equipment-item {
     background-color: var(--color-bg-dark);
+  }
+  
+  .equipment-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+  
+  .equipment-info {
+    flex: 1;
   }
   
   .equipment-name {
@@ -248,17 +326,45 @@ const equipment = [
     font-size: 0.875rem;
     color: var(--color-text-secondary);
     margin: 0;
+    line-height: 1.4;
   }
   
   .equipment-image {
     border-radius: var(--radius-md);
     overflow: hidden;
+    position: relative;
   }
   
   .equipment-image img {
     width: 100%;
     height: 250px;
     object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .equipment-image:hover img {
+    transform: scale(1.05);
+  }
+  
+  .equipment-image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: var(--spacing-md);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  
+  .equipment-image:hover .equipment-image-overlay {
+    transform: translateY(0);
+  }
+  
+  .equipment-image-text {
+    color: white;
+    font-weight: 600;
+    font-size: 0.9375rem;
   }
   
   /* Responsive */

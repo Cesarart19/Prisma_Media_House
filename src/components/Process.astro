@@ -44,7 +44,10 @@ const steps = [
       
       {steps.map((step, index) => (
         <div class="process-step reveal" style={`animation-delay: ${index * 0.15}s`}>
-          <div class="step-number">{step.number}</div>
+          <div class="step-number-wrapper">
+            <div class="step-number">{step.number}</div>
+            <div class="step-pulse"></div>
+          </div>
           <div class="step-content">
             <div class="step-icon">
               {step.icon === 'chat' && (
@@ -77,6 +80,14 @@ const steps = [
             <h3 class="step-title">{step.title}</h3>
             <p class="step-description">{step.description}</p>
           </div>
+          {index < steps.length - 1 && (
+            <div class="step-connector">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </div>
+          )}
         </div>
       ))}
     </div>
@@ -122,16 +133,17 @@ const steps = [
   
   .timeline-line {
     position: absolute;
-    top: 40px;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    top: 45px;
+    left: 15%;
+    right: 15%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent), var(--color-primary));
     z-index: 0;
+    border-radius: 2px;
   }
   
   [data-theme="dark"] .timeline-line {
-    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent));
+    background: linear-gradient(90deg, var(--color-secondary), var(--color-accent), var(--color-secondary));
   }
   
   .process-step {
@@ -140,19 +152,51 @@ const steps = [
     z-index: 1;
   }
   
+  .step-number-wrapper {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin: 0 auto var(--spacing-lg);
+  }
+  
   .step-number {
-    width: 80px;
-    height: 80px;
+    width: 90px;
+    height: 90px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.75rem;
     font-weight: 700;
     border-radius: var(--radius-full);
-    margin: 0 auto var(--spacing-lg);
     position: relative;
+    z-index: 2;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 24px rgba(27, 42, 74, 0.3);
+  }
+  
+  [data-theme="dark"] .step-number {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  
+  .step-pulse {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90px;
+    height: 90px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    opacity: 0;
+    z-index: 1;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  
+  .process-step:hover .step-number {
+    transform: scale(1.1);
+    box-shadow: 0 12px 32px rgba(27, 42, 74, 0.4);
   }
   
   .step-content {
@@ -160,7 +204,8 @@ const steps = [
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
     padding: var(--spacing-lg);
-    transition: all var(--transition-fast);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
   }
   
   [data-theme="dark"] .step-content {
@@ -168,18 +213,18 @@ const steps = [
   }
   
   .process-step:hover .step-content {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--color-primary);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: var(--color-accent);
   }
   
   [data-theme="dark"] .process-step:hover .step-content {
-    border-color: var(--color-secondary);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
   
   .step-icon {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -187,6 +232,7 @@ const steps = [
     color: var(--color-primary);
     border-radius: var(--radius-md);
     margin: 0 auto var(--spacing-md);
+    transition: all 0.3s ease;
   }
   
   [data-theme="dark"] .step-icon {
@@ -194,8 +240,14 @@ const steps = [
     color: var(--color-secondary);
   }
   
+  .process-step:hover .step-icon {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    transform: scale(1.1);
+  }
+  
   .step-title {
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
     color: var(--color-text);
@@ -205,6 +257,31 @@ const steps = [
     font-size: 0.9375rem;
     color: var(--color-text-secondary);
     margin: 0;
+    line-height: 1.6;
+  }
+  
+  .step-connector {
+    position: absolute;
+    right: -30px;
+    top: 45px;
+    color: var(--color-accent);
+    opacity: 0.5;
+    display: none;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.4;
+    }
+    50% {
+      transform: translate(-50%, -50%) scale(1.2);
+      opacity: 0;
+    }
+    100% {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 0.4;
+    }
   }
   
   /* Responsive */
@@ -216,11 +293,26 @@ const steps = [
     .timeline-line {
       display: none;
     }
+    
+    .step-pulse {
+      display: none;
+    }
   }
   
   @media (max-width: 768px) {
     .process-timeline {
       grid-template-columns: 1fr;
+    }
+    
+    .step-number-wrapper {
+      width: 72px;
+      height: 72px;
+    }
+    
+    .step-number {
+      width: 72px;
+      height: 72px;
+      font-size: 1.5rem;
     }
   }
 </style>

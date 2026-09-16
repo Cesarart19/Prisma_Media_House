@@ -2,20 +2,20 @@
 // Header component with navigation and theme toggle
 ---
 
-<header class="header">
+<header class="header" id="header">
   <div class="container header-container">
     <!-- Logo -->
-    <a href="/" class="logo">
+    <a href="#inicio" class="logo">
       <span class="logo-text">PRISMA</span>
       <span class="logo-subtitle">MEDIA HOUSE</span>
     </a>
     
     <!-- Navigation -->
     <nav class="nav" id="main-nav">
-      <a href="#servicios" class="nav-link">Servicios</a>
-      <a href="#portafolio" class="nav-link">Portafolio</a>
-      <a href="#proceso" class="nav-link">Proceso</a>
-      <a href="#nosotros" class="nav-link">Nosotros</a>
+      <a href="#servicios" class="nav-link" data-section="servicios">Servicios</a>
+      <a href="#portafolio" class="nav-link" data-section="portafolio">Portafolio</a>
+      <a href="#proceso" class="nav-link" data-section="proceso">Proceso</a>
+      <a href="#nosotros" class="nav-link" data-section="nosotros">Nosotros</a>
     </nav>
     
     <!-- Actions -->
@@ -39,7 +39,7 @@
       </button>
       
       <!-- CTA Button (Desktop) -->
-      <a href="https://wa.me/57XXXXXXXXXX?text=Hola,%20me%20interesa%20un%20servicio%20de%20producción%20audiovisual" 
+      <a href="https://wa.me/584149656283?text=Hola,%20me%20interesa%20un%20servicio%20de%20producción%20audiovisual" 
          class="btn btn-primary header-cta" 
          target="_blank" 
          rel="noopener noreferrer">
@@ -64,7 +64,7 @@
     <a href="#portafolio" class="nav-link-mobile">Portafolio</a>
     <a href="#proceso" class="nav-link-mobile">Proceso</a>
     <a href="#nosotros" class="nav-link-mobile">Nosotros</a>
-    <a href="https://wa.me/57XXXXXXXXXX?text=Hola,%20me%20interesa%20un%20servicio%20de%20producción%20audiovisual" 
+    <a href="https://wa.me/584149656283?text=Hola,%20me%20interesa%20un%20servicio%20de%20producción%20audiovisual" 
        class="btn btn-primary nav-cta-mobile" 
        target="_blank" 
        rel="noopener noreferrer">
@@ -80,15 +80,25 @@
     left: 0;
     right: 0;
     z-index: var(--z-header);
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--color-border);
-    transition: all var(--transition-theme);
+    transition: all 0.3s ease;
+  }
+  
+  .header.scrolled {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   }
   
   [data-theme="dark"] .header {
-    background-color: rgba(13, 17, 23, 0.9);
+    background-color: rgba(13, 17, 23, 0.95);
+  }
+  
+  [data-theme="dark"] .header.scrolled {
+    background-color: rgba(13, 17, 23, 0.98);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
   
   .header-container {
@@ -103,6 +113,11 @@
     display: flex;
     flex-direction: column;
     line-height: 1;
+    transition: transform 0.3s ease;
+  }
+  
+  .logo:hover {
+    transform: scale(1.02);
   }
   
   .logo-text {
@@ -127,21 +142,46 @@
   .nav {
     display: flex;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
   }
   
   .nav-link {
     font-size: 0.9375rem;
     font-weight: 500;
     color: var(--color-text-secondary);
-    transition: color var(--transition-fast);
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 0.5rem 0;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-primary));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
   }
   
   .nav-link:hover {
     color: var(--color-primary);
   }
   
-  [data-theme="dark"] .nav-link:hover {
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 100%;
+  }
+  
+  .nav-link.active {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+  
+  [data-theme="dark"] .nav-link:hover,
+  [data-theme="dark"] .nav-link.active {
     color: var(--color-text);
   }
   
@@ -164,12 +204,13 @@
     border-radius: var(--radius-full);
     cursor: pointer;
     color: var(--color-text);
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
   }
   
   .theme-toggle:hover {
     background-color: var(--color-bg-secondary);
-    border-color: var(--color-primary);
+    border-color: var(--color-accent);
+    transform: rotate(15deg);
   }
   
   .icon-sun {
@@ -194,6 +235,12 @@
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: var(--radius-full);
+    transition: all 0.3s ease;
+  }
+  
+  .header-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
   }
   
   /* Mobile Menu Toggle */
@@ -201,20 +248,35 @@
     display: none;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
+    gap: 6px;
     width: 40px;
     height: 40px;
     background: transparent;
     border: none;
     cursor: pointer;
     padding: 8px;
+    position: relative;
   }
   
   .menu-bar {
     width: 100%;
     height: 2px;
     background-color: var(--color-text);
-    transition: all var(--transition-fast);
+    transition: all 0.3s ease;
+    transform-origin: center;
+  }
+  
+  .menu-toggle.active .menu-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  
+  .menu-toggle.active .menu-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  
+  .menu-toggle.active .menu-bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
   }
   
   /* Mobile Navigation */
@@ -230,10 +292,15 @@
     flex-direction: column;
     gap: var(--spacing-md);
     overflow-y: auto;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
   }
   
   .nav-mobile.active {
     display: flex;
+    opacity: 1;
+    transform: translateY(0);
   }
   
   .nav-link-mobile {
@@ -242,11 +309,37 @@
     color: var(--color-text);
     padding: var(--spacing-sm) 0;
     border-bottom: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  
+  .nav-mobile.active .nav-link-mobile {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  
+  .nav-mobile.active .nav-link-mobile:nth-child(1) { transition-delay: 0.1s; }
+  .nav-mobile.active .nav-link-mobile:nth-child(2) { transition-delay: 0.15s; }
+  .nav-mobile.active .nav-link-mobile:nth-child(3) { transition-delay: 0.2s; }
+  .nav-mobile.active .nav-link-mobile:nth-child(4) { transition-delay: 0.25s; }
+  
+  .nav-link-mobile:hover {
+    color: var(--color-accent);
+    padding-left: var(--spacing-sm);
   }
   
   .nav-cta-mobile {
     margin-top: var(--spacing-md);
     width: 100%;
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  
+  .nav-mobile.active .nav-cta-mobile {
+    transform: translateY(0);
+    opacity: 1;
+    transition-delay: 0.3s;
   }
   
   /* Responsive */
@@ -269,6 +362,7 @@
   // Mobile menu toggle
   const menuToggle = document.getElementById('menu-toggle');
   const navMobile = document.getElementById('nav-mobile');
+  const header = document.getElementById('header');
   
   if (menuToggle && navMobile) {
     menuToggle.addEventListener('click', () => {
@@ -284,4 +378,42 @@
       });
     });
   }
+  
+  // Header scroll effect
+  const handleScroll = () => {
+    if (window.scrollY > 50) {
+      header?.classList.add('scrolled');
+    } else {
+      header?.classList.remove('scrolled');
+    }
+  };
+  
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+  
+  // Active section detection
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[data-section]');
+  
+  const observerOptions = {
+    root: null,
+    rootMargin: '-20% 0px -80% 0px',
+    threshold: 0
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.getAttribute('id');
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('data-section') === sectionId) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  }, observerOptions);
+  
+  sections.forEach(section => observer.observe(section));
 </script>
