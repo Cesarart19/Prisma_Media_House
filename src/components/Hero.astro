@@ -1,20 +1,33 @@
 ---
-// Hero section with video background
+// Hero section with video slider background
+const videos = [
+  { src: '/videos/hero/camaras-estudio.mp4', alt: 'Cámaras profesionales en estudio' },
+  { src: '/videos/hero/videografo-tripode.mp4', alt: 'Videógrafo ajustando equipo' },
+  { src: '/videos/hero/equipo-profesional.mp4', alt: 'Equipo profesional de producción' },
+  { src: '/videos/hero/crew-filmando.mp4', alt: 'Equipo de filmación en acción' },
+  { src: '/videos/hero/bts-estudio.mp4', alt: 'Detrás de cámaras en estudio' },
+];
+const TRANSITION_DURATION = 1500; // 1.5s crossfade
+const DISPLAY_DURATION = 7000; // 7s por video
 ---
 
 <section class="hero" id="inicio">
-  <!-- Video Background -->
+  <!-- Video Slider Background -->
   <div class="hero-video-container">
-    <video 
-      class="hero-video" 
-      autoplay 
-      muted 
-      loop 
-      playsinline
-      poster="/images/hero-poster.svg"
-    >
-      <source src="/videos/hero.mp4" type="video/mp4">
-    </video>
+    {videos.map((video, index) => (
+      <video 
+        class={`hero-video ${index === 0 ? 'active' : ''}`}
+        data-index={index}
+        autoplay={index === 0}
+        muted 
+        loop 
+        playsinline
+        preload={index <= 1 ? 'auto' : 'metadata'}
+        poster="/images/hero-poster.svg"
+      >
+        <source src={video.src} type="video/mp4">
+      </video>
+    ))}
     <div class="hero-overlay"></div>
     <div class="hero-grain"></div>
   </div>
@@ -90,9 +103,18 @@
   }
   
   .hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+  }
+  
+  .hero-video.active {
+    opacity: 1;
   }
   
   .hero-overlay {
@@ -285,3 +307,46 @@
     }
   }
 </style>
+
+<script>
+  // Video slider with crossfade transitions
+  document.addEventListener('DOMContentLoaded', () => {
+    const videos = document.querySelectorAll('.hero-video');
+    if (videos.length <= 1) return;
+    
+    let currentIndex = 0;
+    const DISPLAY_DURATION = 7000; // 7s per video
+    
+    // Pause all videos except the first
+    videos.forEach((video, index) => {
+      if (index !== 0) {
+        video.pause();
+      }
+    });
+    
+    function nextVideo() {
+      const currentVideo = videos[currentIndex];
+      const nextIndex = (currentIndex + 1) % videos.length;
+      const nextVideo = videos[nextIndex];
+      
+      // Remove active class from current (triggers fade out)
+      currentVideo.classList.remove('active');
+      
+      // Add active class to next (triggers fade in)
+      nextVideo.classList.add('active');
+      
+      // Play next video
+      nextVideo.play().catch(() => {});
+      
+      // Pause current video after transition completes
+      setTimeout(() => {
+        currentVideo.pause();
+      }, 1500);
+      
+      currentIndex = nextIndex;
+    }
+    
+    // Start the slider
+    setInterval(nextVideo, DISPLAY_DURATION);
+  });
+</script>
